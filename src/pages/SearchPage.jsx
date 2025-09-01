@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Bus } from 'lucide-react';
 import BusSearch from '../components/Bus/BusSearch';
 import BusCard from '../components/Bus/BusCard';
 import SeatMap from '../components/Bus/SeatMap';
