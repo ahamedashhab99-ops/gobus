@@ -42,6 +42,12 @@ const BusCard = ({ bus, onBook }) => {
                 </div>
                 <div className="text-sm text-gray-500">Departure</div>
               </div>
+              <div className="text-center">
+                <div className="text-lg font-semibold text-emerald-600">
+                  ₹{bus.price}
+                </div>
+                <div className="text-sm text-gray-500">per seat</div>
+              </div>
             </div>
 
             {/* Date and Seats */}
@@ -60,15 +66,19 @@ const BusCard = ({ bus, onBook }) => {
           </div>
         </div>
 
-        {/* Book Button */}
-        <div className="lg:ml-8">
+        {/* Price and Book Button */}
+        <div className="lg:ml-8 text-center lg:text-right">
+          <div className="mb-3">
+            <div className="text-3xl font-bold text-emerald-600">₹{bus.price}</div>
+            <div className="text-sm text-gray-500">per seat</div>
+          </div>
           <button
             onClick={() => onBook(bus)}
             disabled={bus.availableSeats === 0}
-            className={`w-full lg:w-auto px-8 py-3 font-medium rounded-lg transition-colors ${
+            className={`w-full lg:w-auto px-8 py-3 font-medium rounded-lg transition-all duration-200 ${
               bus.availableSeats === 0
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
             }`}
           >
             {bus.availableSeats === 0 ? 'Sold Out' : 'Select Seats'}

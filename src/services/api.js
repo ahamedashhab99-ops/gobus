@@ -48,6 +48,7 @@ export const authAPI = {
 // Bus API
 export const busAPI = {
   searchBuses: (params) => api.get('/buses/search', { params }),
+  getBookedSeats: (busId) => api.get(`/buses/booked-seats/${busId}`),
   getAllBuses: () => api.get('/buses'),
   createBus: (busData) => api.post('/buses/create', busData),
   updateBus: (id, busData) => api.put(`/buses/update/${id}`, busData),

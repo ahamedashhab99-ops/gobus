@@ -184,7 +184,7 @@ const BusSearch = ({ onSearch, loading }) => {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors space-x-2"
+            className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 hover:shadow-lg space-x-2 text-lg"
           >
             <Search className="h-5 w-5" />
             <span>{loading ? 'Searching...' : 'Search Buses'}</span>

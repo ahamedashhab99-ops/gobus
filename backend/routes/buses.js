@@ -1,9 +1,101 @@
 import express from 'express';
 import { body, validationResult, query } from 'express-validator';
 import Bus from '../models/Bus.js';
+import Booking from '../models/Booking.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
+
+// Initialize sample buses
+const initializeSampleBuses = async () => {
+  try {
+    const busCount = await Bus.countDocuments();
+    if (busCount === 0) {
+      const sampleBuses = [
+        {
+          busNumber: 'MH12AB1234',
+          from: 'Mumbai',
+          to: 'Pune',
+          date: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
+          time: '08:00',
+          totalSeats: 40,
+          availableSeats: 40,
+          price: 500
+        },
+        {
+          busNumber: 'DL01CD5678',
+          from: 'Delhi',
+          to: 'Jaipur',
+          date: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          time: '10:30',
+          totalSeats: 45,
+          availableSeats: 45,
+          price: 600
+        },
+        {
+          busNumber: 'KA03EF9012',
+          from: 'Bangalore',
+          to: 'Chennai',
+          date: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          time: '14:15',
+          totalSeats: 50,
+          availableSeats: 50,
+          price: 750
+        },
+        {
+          busNumber: 'MH14GH3456',
+          from: 'Mumbai',
+          to: 'Goa',
+          date: new Date(Date.now() + 48 * 60 * 60 * 1000), // Day after tomorrow
+          time: '22:00',
+          totalSeats: 35,
+          availableSeats: 35,
+          price: 800
+        },
+        {
+          busNumber: 'UP16IJ7890',
+          from: 'Delhi',
+          to: 'Agra',
+          date: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          time: '06:30',
+          totalSeats: 40,
+          availableSeats: 40,
+          price: 400
+        }
+      ];
+
+      await Bus.insertMany(sampleBuses);
+      console.log('Sample buses added to database');
+    }
+  } catch (error) {
+    console.error('Error initializing sample buses:', error);
+  }
+};
+
+// Initialize sample buses on startup
+initializeSampleBuses();
+
+// Get booked seats for a specific bus
+router.get('/booked-seats/:busId', async (req, res) => {
+  try {
+    const { busId } = req.params;
+    
+    const bookings = await Booking.find({
+      busId: busId,
+      status: 'confirmed'
+    });
+    
+    const bookedSeats = bookings.flatMap(booking => booking.seatsBooked);
+    
+    res.json({
+      message: 'Booked seats retrieved successfully',
+      bookedSeats
+    });
+  } catch (error) {
+    console.error('Get booked seats error:', error);
+    res.status(500).json({ message: 'Server error retrieving booked seats' });
+  }
+});
 
 // Search buses
 router.get('/search', [
